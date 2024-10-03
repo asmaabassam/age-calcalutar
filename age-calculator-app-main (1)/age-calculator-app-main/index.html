@@ -2,36 +2,148 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  
-  <title>Frontend Mentor | Age calculator app</title>
+  <title>Age calculator app</title>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
+body {
+  background-color: hsl(0, 0%, 86%);
+  font-family: "Courier New", Courier, monospace;
+}
+
+span {
+  color: hsl(259, 100%, 65%);
+}
+
+input:focus {
+  outline: none;
+  border-color: hsl(259, 100%, 65%);
+}
+
+input {
+  margin-top: 10px;
+  padding-block: 13px;
+  width: 70%;
+  border-radius: 10px;
+  font-size: 25px;
+  font-weight: 900;
+}
+
+label {
+  font-weight: bold;
+  color: hsl(0, 1%, 44%);
+  font-family: "Courier New", Courier, monospace;
+}
+
+p {
+  font-size: 60px;
+  font-weight: 800;
+  line-height: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+  p {
+    font-size: 30px;
+  }
+  .dates {
+    display: flex;
+  }
+}
+</style>
 </head>
 <body>
+<div
+style="
+  max-width: 600px;
+  margin: auto;
+  margin-top: 200px;
+  border-radius: 40px;
+  background-color: white;
+  padding: 30px;
+  border-end-end-radius: 30%;
+"
+>
 
-  Day
-  DD
-
-  Month
-  MM
-
-  Year
-  YYYY
-
-  -- years
-  -- months
-  -- days
-  
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
+<div style="display: flex; gap: 10px; margin-bottom: 50px" class="dates">
+  <div style="display: flex">
+    <div style="display: flex; flex-direction: column">
+      <label for="day">DAY</label>
+      <input type="number" id="day" />
+    </div>
+    <div style="display: flex; flex-direction: column">
+      <label for="month">MONTH</label>
+      <input type="number" id="month" />
+    </div>
+    <div style="display: flex; flex-direction: column">
+      <label for="year">YEAR</label>
+      <input type="number" id="year" />
+    </div>
   </div>
+
+  <button
+    style="
+      background-color: rgb(119, 48, 185);
+      border: none;
+      border-radius: 100%;
+      padding: 20px 22px;
+      cursor: pointer;
+      margin-top: 50px;
+      margin-bottom: -20px;
+    "
+  >
+    <img src="./assets/images/icon-arrow.svg" alt="" />
+  </button>
+</div>
+<div style="border-top: 1px solid; margin-top: -50px; width: 90%">
+  <p><span id="yearNum">--</span> years</p>
+  <p><span id="monthNum">--</span> months</p>
+  <p><span id="dayNum">--</span> days</p>
+</div>
+</div>
+<script>
+
+let currentDate = new Date();  // للحصول علي تاريخ اليوم الحالي
+let currentMonth = currentDate.getMonth() + 1;
+let currentDay = currentDate.getDate();
+let currentYear = currentDate.getFullYear();
+
+const dayInput = document.querySelector("#day"); // عناصر ال input
+const monthInput = document.querySelector("#month");
+const yearInput = document.querySelector("#year");
+
+let usersYear = "";
+let usersDay = "";
+let userMonth = "";
+
+// علشان لو كتبنا قيمه جديده يتم تخزينها ف المتغيرات
+dayInput.addEventListener("change", function getDateInfo(e) {
+  usersDay = e.target.value;
+});
+monthInput.addEventListener("change", function getMonthInfo(e) {
+  userMonth = e.target.value;
+});
+yearInput.addEventListener("change", function getYearInfo(e) {
+  usersYear = e.target.value;
+});
+ 
+// التفاعل مع button
+const btn = document.querySelector("button");
+btn.addEventListener("click", function btnClick() {
+  document.getElementById("yearNum").innerHTML = usersYear
+    ? currentYear - usersYear
+    : "";
+  document.getElementById("monthNum").innerHTML = userMonth
+    ? currentMonth <= userMonth
+      ? 12 - userMonth
+      : currentMonth - userMonth
+    : "";
+  document.getElementById("dayNum").innerHTML = usersDay
+    ? currentDay <= usersDay
+      ? 31 - usersDay
+      : currentDay - usersDay
+    : "";
+});
+</script>
 </body>
 </html>
